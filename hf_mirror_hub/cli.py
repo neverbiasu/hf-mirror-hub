@@ -7,6 +7,7 @@ import shutil
 import time
 import glob
 
+
 def convert_symlinks_to_real(directory):
     """将目录中的软链接转换为实际文件"""
     print(f"\n开始转换软链接为实际文件: {directory}")
@@ -38,7 +39,7 @@ def convert_symlinks_to_real(directory):
 
 def clear_lock_files(directory):
     """清理目录中的锁文件"""
-    lock_pattern = os.path.join(directory, '.locks', '**', '*.lock')
+    lock_pattern = os.path.join(directory, ".locks", "**", "*.lock")
     lock_files = glob.glob(lock_pattern, recursive=True)
     for lock_file in lock_files:
         try:
@@ -73,6 +74,7 @@ def download_from_mirror(model_name, save_dir=None, use_hf_transfer=True, token=
     try:
         if use_hf_transfer:
             import hf_transfer
+
             os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
             print("启用 hf-transfer")
 
@@ -97,7 +99,7 @@ def download_from_mirror(model_name, save_dir=None, use_hf_transfer=True, token=
 
         # 如果下载后还存在锁文件，等待其释放
         if save_dir:
-            lock_pattern = os.path.join(cache_dir, '.locks', '**', '*.lock')
+            lock_pattern = os.path.join(cache_dir, ".locks", "**", "*.lock")
             for lock_file in glob.glob(lock_pattern, recursive=True):
                 wait_for_lock_release(lock_file)
             convert_symlinks_to_real(save_dir)
@@ -111,16 +113,20 @@ def download_from_mirror(model_name, save_dir=None, use_hf_transfer=True, token=
 
 def main():
     parser = argparse.ArgumentParser(description="Hugging Face 镜像下载工具")
-    parser.add_argument("model_name", help="Hugging Face 模型名称")
     parser.add_argument(
-        "-s", "--save_dir", default=None, help="保存目录（默认为当前目录）"
+        "--model", "-M", default=None, type=str, help="Hugging Face 模型名称"
     )
     parser.add_argument(
-        "-t", "--token", default=None, help="Hugging Face Hub 访问令牌"
+        "--save_dir", "-S", default=None, type=str, help="保存目录（默认为当前目录）"
     )
     parser.add_argument(
-        "--no-hf-transfer", dest='use_hf_transfer', action='store_false',
-        help="禁用 hf-transfer"
+        "--token", "-T", default=None, type=str, help="Hugging Face Hub 访问令牌"
+    )
+    parser.add_argument(
+        "--no-hf-transfer",
+        dest="use_hf_transfer",
+        action="store_false",
+        help="禁用 hf-transfer",
     )
     parser.set_defaults(use_hf_transfer=True)
 
@@ -129,8 +135,8 @@ def main():
     download_from_mirror(
         args.model_name,
         save_dir=args.save_dir,
+        token=args.token,
         use_hf_transfer=args.use_hf_transfer,
-        token=args.token
     )
 
 
