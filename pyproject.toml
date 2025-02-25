@@ -6,6 +6,13 @@ authors = ["neverbiasu <1751162157@qq.com>"]
 license = "MIT"
 readme = "README.md"
 
+packages = [
+    { include = "hf_mirror_hub" }
+]
+
+[tool.poetry.scripts]
+hf-mirror-download = "hf_mirror_hub.cli:main"
+
 [tool.poetry.dependencies]
 python = "^3.8"
 huggingface_hub = "^0.16.4"
