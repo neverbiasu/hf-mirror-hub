@@ -15,12 +15,12 @@ hf-mirror-download = "hf_mirror_hub.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
-huggingface_hub = "^0.16.4"
-hf-transfer = "^0.1.4"
-requests = "^2.31.0"
+huggingface_hub = "*"
+hf-transfer = "*"
+requests = "*"
 
 [tool.poetry.dev-dependencies]
-black = "^23.7.2"
+black = "*"
 
 [build-system]
 requires = ["poetry-core"]
