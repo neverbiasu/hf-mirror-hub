@@ -23,8 +23,8 @@ pip install hf-mirror-hub
 ```bash
 git clone https://github.com/neverbiasu/hf-mirror-hub.git
 cd hf-mirror-hub
-conda create -n hf_mirror_hub python=3.8 # 非必需，也可以用 venv 或者直接安装
-conda activate hf_mirror_hub
+conda create -n hf-mirror-hub python=3.8 # 非必需，也可以用 venv 或者直接安装
+conda activate hf-mirror-hub
 pip install -e .
 ```
 
@@ -33,18 +33,18 @@ pip install -e .
 ### 基本用法 (下载模型)
 
 ```bash
-hf-mirror-download --model <model_name>
+hf-mirror-hub --model <model_name>
 ```
 
 ### 完整参数
 
 ```bash
-hf-mirror-download --model <model_name> --save_dir <save_path> --token <your_token> [--no-hf-transfer]
+hf-mirror-hub --model <model_name> --save_dir <save_path> --token <your_token> [--no-hf-transfer]
 ```
 
 ### 参数说明
 
-*   `--model`, `-M`: 可选，模型名称 (例如: `baichuan-inc/Baichuan2-7B-Chat`)
+*   `--model`, `-M`: 可选，模型名称 (例如: `deepseek-ai/DeepSeek-R1-Distill-Qwen-32B`)
 *   `--save_dir`, `-S`: 可选，保存目录路径 (默认为 `data`)
 *   `--token`, `-T`: 可选，Hugging Face 访问令牌 (用于访问私有模型或数据集)
 *   `--no-hf-transfer`: 可选，禁用 `hf-transfer` 加速
