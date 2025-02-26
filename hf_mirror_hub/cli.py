@@ -8,35 +8,6 @@ import time
 import glob
 
 
-def convert_symlinks_to_real(directory):
-    """将目录中的软链接转换为实际文件"""
-    print(f"\n开始转换软链接为实际文件: {directory}")
-
-    def copy_symlink_to_real(src_path):
-        if os.path.islink(src_path):
-            real_path = os.path.realpath(src_path)
-            os.unlink(src_path)
-            if os.path.isdir(real_path):
-                shutil.copytree(real_path, src_path)
-            else:
-                shutil.copy2(real_path, src_path)
-            return True
-        return False
-
-    for root, dirs, files in os.walk(directory, followlinks=True):
-        for file in files:
-            file_path = os.path.join(root, file)
-            if copy_symlink_to_real(file_path):
-                print(f"已转换文件: {file_path}")
-
-        for dir in dirs:
-            dir_path = os.path.join(root, dir)
-            if copy_symlink_to_real(dir_path):
-                print(f"已转换目录: {dir_path}")
-
-    print("软链接转换完成!")
-
-
 def clear_lock_files(directory):
     """清理目录中的锁文件"""
     lock_pattern = os.path.join(directory, ".locks", "**", "*.lock")
@@ -84,12 +55,15 @@ def download_from_mirror(model, save_dir=None, use_hf_transfer=True, token=None)
         if token:
             huggingface_hub.login(token=token)
 
+        if save_dir:
+            save_dir = os.path.join(save_dir, model.split("/")[-1])
+
         # 清理可能存在的锁文件
         cache_dir = os.path.expanduser("~/.cache/huggingface/hub")
         clear_lock_files(cache_dir)
 
         download_shell = (
-            f"huggingface-cli download --local-dir-use-symlinks False --resume-download "
+            f"huggingface-cli download --local-dir-use-symlinks False "
             f"--force-download --max-workers 1 --cache-dir {cache_dir} "  # 指定缓存目录
             f"{'--token ' + token if token else ''} {model} "
             f"{'--local-dir ' + save_dir if save_dir else ''}"
@@ -102,7 +76,6 @@ def download_from_mirror(model, save_dir=None, use_hf_transfer=True, token=None)
             lock_pattern = os.path.join(cache_dir, ".locks", "**", "*.lock")
             for lock_file in glob.glob(lock_pattern, recursive=True):
                 wait_for_lock_release(lock_file)
-            convert_symlinks_to_real(save_dir)
 
         print(f"模型 {model} 下载完成！")
 
