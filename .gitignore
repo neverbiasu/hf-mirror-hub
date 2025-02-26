@@ -1,0 +1,5 @@
+/dist
+
+/hf_mirror_hub/__pycache__
+
+/poetry.lock
