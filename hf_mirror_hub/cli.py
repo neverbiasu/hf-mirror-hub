@@ -69,7 +69,7 @@ def wait_for_lock_release(lock_file, timeout=30):
     return True
 
 
-def download_from_mirror(model_name, save_dir=None, use_hf_transfer=True, token=None):
+def download_from_mirror(model, save_dir=None, use_hf_transfer=True, token=None):
     """从镜像站点下载 Hugging Face 模型"""
     try:
         if use_hf_transfer:
@@ -91,7 +91,7 @@ def download_from_mirror(model_name, save_dir=None, use_hf_transfer=True, token=
         download_shell = (
             f"huggingface-cli download --local-dir-use-symlinks False --resume-download "
             f"--force-download --max-workers 1 --cache-dir {cache_dir} "  # 指定缓存目录
-            f"{'--token ' + token if token else ''} {model_name} "
+            f"{'--token ' + token if token else ''} {model} "
             f"{'--local-dir ' + save_dir if save_dir else ''}"
         )
         print(f"执行下载命令: {download_shell}")
@@ -104,7 +104,7 @@ def download_from_mirror(model_name, save_dir=None, use_hf_transfer=True, token=
                 wait_for_lock_release(lock_file)
             convert_symlinks_to_real(save_dir)
 
-        print(f"模型 {model_name} 下载完成！")
+        print(f"模型 {model} 下载完成！")
 
     except Exception as e:
         print(f"下载出错：{e}")
@@ -133,7 +133,7 @@ def main():
     args = parser.parse_args()
 
     download_from_mirror(
-        args.model_name,
+        args.model,
         save_dir=args.save_dir,
         token=args.token,
         use_hf_transfer=args.use_hf_transfer,
