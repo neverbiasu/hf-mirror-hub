@@ -1,4 +1,4 @@
-# hf_mirror_hub
+# hf-mirror-hub
 
 一个从 Hugging Face 镜像站点快速下载模型和数据集的命令行工具。
 
