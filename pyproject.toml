@@ -1,6 +1,6 @@
 [tool.poetry]
-name = "hf_mirror_hub"
-version = "0.0.1"
+name = "hf-mirror-hub"
+version = "0.0.2"
 description = "A CLI tool to download Hugging Face models and datasets from mirror sites."
 authors = ["neverbiasu <1751162157@qq.com>"]
 license = "MIT"
@@ -11,7 +11,7 @@ packages = [
 ]
 
 [tool.poetry.scripts]
-hf_mirror_hub = "hf_mirror_hub.cli:main"
+hf-mirror-hub = "hf_mirror_hub.cli:main"
 
 [tool.poetry.dependencies]
 python = "^3.8"
