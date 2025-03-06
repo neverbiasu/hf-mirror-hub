@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "hf-mirror-hub"
-version = "0.0.2"
+version = "0.0.3"
 description = "A CLI tool to download Hugging Face models and datasets from mirror sites."
 authors = ["neverbiasu <1751162157@qq.com>"]
 license = "MIT"
@@ -18,6 +18,8 @@ python = "^3.8"
 huggingface_hub = "*"
 hf-transfer = "*"
 requests = "*"
+pytest = "*"
+flake8 = "*"
 
 [tool.poetry.dev-dependencies]
 black = "*"
@@ -46,3 +48,7 @@ exclude = '''
   )/
 )
 '''
+
+[tool.flake8]
+max-line-length = 120
+exclude = [".git", "__pycache__", "old", "build", "dist"]
