@@ -1,5 +1,11 @@
 # hf-mirror-hub
 
+<p align="center">
+<img alt="PyPI - Version" src="https://img.shields.io/pypi/v/hf-mirror-hub">
+<img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/hf-mirror-hub">
+<img alt="GitHub License" src="https://img.shields.io/github/license/neverbiasu/hf-mirror-hub">
+</p>
+
 一个从 Hugging Face 镜像站点快速下载模型和数据集的命令行工具。
 
 ## 特性
