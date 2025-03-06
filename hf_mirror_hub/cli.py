@@ -69,7 +69,12 @@ def download_from_mirror(model, save_dir=None, use_hf_transfer=True, token=None)
             f"{'--local-dir ' + save_dir if save_dir else ''}"
         )
         print(f"执行下载命令: {download_shell}")
-        os.system(download_shell)
+        result = os.system(download_shell)  # 获取命令执行结果
+
+        # 检查命令执行结果
+        if result != 0:
+            print(f"下载失败，错误代码：{result}")
+            return False
 
         # 如果下载后还存在锁文件，等待其释放
         if save_dir:
@@ -78,10 +83,11 @@ def download_from_mirror(model, save_dir=None, use_hf_transfer=True, token=None)
                 wait_for_lock_release(lock_file)
 
         print(f"模型 {model} 下载完成！")
+        return True  # 下载成功返回 True
 
     except Exception as e:
         print(f"下载出错：{e}")
-        sys.exit(1)
+        return False  # 发生异常返回 False
 
 
 def main():

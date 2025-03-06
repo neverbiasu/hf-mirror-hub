@@ -3,3 +3,6 @@
 /hf_mirror_hub/__pycache__
 
 /poetry.lock
+
+/tests/__pycache__
+/test_data/
