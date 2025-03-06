@@ -1,9 +1,12 @@
 # hf-mirror-hub
 
 <p align="center">
+<img alt="logo" src="assets/logo.svg"
+</p>
+<p align="center">
 <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/hf-mirror-hub">
 <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/hf-mirror-hub">
-<img alt="GitHub License" src="https://img.shields.io/github/license/neverbiasu/hf-mirror-hub">
+<img alt="GitHub License" src="https://img.shields.io/github/license/neverbiasu/hf-mirror-hub?color=blue">
 </p>
 
 一个从 Hugging Face 镜像站点快速下载模型和数据集的命令行工具。
@@ -57,7 +60,7 @@ hf-mirror-hub --model <model_name> --save_dir <save_path> --token <your_token> [
 
 ## 贡献
 
-如果您认为仓库有什么可以修改或者优化的地方，可以提issues说明或fork本仓库更改后提PR。
+请参阅 [CONTRIBUTING.md](CONTRIBUTING.md) 了解如何贡献。
 
 ## 许可证
 
