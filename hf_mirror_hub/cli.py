@@ -1,4 +1,3 @@
-# filepath: hf_mirror_downloader/cli.py
 import argparse
 import os
 import sys
@@ -44,10 +43,11 @@ def download_from_mirror(model, save_dir=None, use_hf_transfer=True, token=None)
     """从镜像站点下载 Hugging Face 模型"""
     try:
         if use_hf_transfer:
-            import hf_transfer
-
             os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "1"
             print("启用 hf-transfer")
+        else:
+            os.environ["HF_HUB_ENABLE_HF_TRANSFER"] = "0"
+            print("禁用 hf-transfer")
 
         os.environ["HF_ENDPOINT"] = "https://hf-mirror.com"
         print("使用镜像站点：https://hf-mirror.com")
@@ -69,7 +69,15 @@ def download_from_mirror(model, save_dir=None, use_hf_transfer=True, token=None)
             f"{'--local-dir ' + save_dir if save_dir else ''}"
         )
         print(f"执行下载命令: {download_shell}")
-        result = os.system(download_shell)  # 获取命令执行结果
+
+        # 重试机制
+        max_retries = 3
+        for attempt in range(max_retries):
+            result = os.system(download_shell)
+            if result == 0:
+                break
+            print(f"下载失败，重试 {attempt + 1}/{max_retries} 次...")
+            time.sleep(5)
 
         # 检查命令执行结果
         if result != 0:
